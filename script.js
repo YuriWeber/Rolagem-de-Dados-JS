@@ -1,25 +1,38 @@
 class Dados {
-    constructor(dadoSelecionador, valorExtra) {
-        this._dadoSelecionador = dadoSelecionador;
-        this._valorExtra = valorExtra;
+    constructor(dadosSelecionados, resRolagem, resRolagemTotal) {
+        this._dadosSelecionados = dadosSelecionados;
+        this._resRolagem = resRolagem;
+        this._resRolagemTotal = resRolagemTotal;
+    }
+
+    rolar() {
+
+    }
+
+    limpar() {
+
+    }
+
+    adicionarDado() {
+
+    }
+
+    removerDado() {
+
+    }
+
+    somar() {
+
     }
 }
 
 const dadoSelecionador = document.querySelectorAll('.seletor .dado');
-const valorExtra = document.querySelector('#valor-extra');
 const btoAdicionarDado = document.querySelector('.adicionar-dado');
-const btoRolagem = document.querySelector('.rolar');
-const btoLimpar = document.querySelector('.limpar');
+const valorExtra = document.querySelector('#valor-extra');
+const dadosSelecionados = document.querySelector('.selecionados');
 const resRolagem = document.querySelector('.res-rolagem');
 const resRolagemTotal = document.querySelector('.total-rolagem')
-// const dadosSelecionados
+const btoRolagem = document.querySelector('.rolar');
+const btoLimpar = document.querySelector('.limpar');
 
-const dados = new Dados(dadoSelecionador, valorExtra);
-
-console.log(dadoSelecionador);
-console.log(valorExtra);
-console.log(btoAdicionarDado);
-console.log(btoRolagem);
-console.log(btoLimpar);
-console.log(resRolagem);
-console.log(resRolagemTotal);
+const dados = new Dados(dadosSelecionados, resRolagem, resRolagemTotal);
