@@ -36,3 +36,5 @@ const btoRolagem = document.querySelector('.rolar');
 const btoLimpar = document.querySelector('.limpar');
 
 const dados = new Dados(dadosSelecionados, resRolagem, resRolagemTotal);
+
+console.log("teste do git vscode")
