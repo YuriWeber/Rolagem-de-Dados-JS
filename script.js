@@ -8,23 +8,36 @@ class Dados { // classe geral da rolagem de dados
 
 
     rolar() {
-
+        this.limpar()
+        const dadosSelecionados = this.selecionarDados();
+        dadosSelecionados.forEach(dado => {
+            const rolagem = document.createElement('img');
+            rolagem.src = '../dados/' + dado.getAttribute('name') + '.png';
+            rolagem.alt = dado.getAttribute('name') + '.png';
+            this._resRolagem.appendChild(rolagem);
+        })
     }
 
-    limpar() { // limpa a tela
-        // this._selecionados.innerHTML = '';
+    limpar(total = false) {
+        if (total) { // irá remover os dados apenas se for verdadeiro
         while (this._selecionados.firstChild) {
             this._selecionados.removeChild(this._selecionados.lastChild);
+        }}
+        while (this._resRolagem.firstChild) { // remove a rolagem
+            this._resRolagem.removeChild(this._resRolagem.lastChild);
         }
     }
 
     adicionarDado() { // adiona um novo dado
-        const dadoId = "dado" + this._idAtual; // variavel para o id do dado
+        const dadoId = 'dado' + this._idAtual;
         const dado = document.createElement('button'); // cria o botão para se referir ao dado
+        const name = 'D6'
+
         dado.classList.add('dado');
         dado.id = dadoId;
         this._idAtual += 1;
-        dado.textContent = "D12";
+        dado.textContent = name;
+        dado.setAttribute('name', name)
 
         this._selecionados.appendChild(dado); // insere na div
 }
@@ -40,7 +53,7 @@ class Dados { // classe geral da rolagem de dados
     }
 
     atualizaDadosBto() { // adiciona um eventlistener para os dados selecionados, chamado quando adicio um dado novo
-        let dadosSelecionados = document.querySelectorAll('.selecionados .dado'); // dados dentro da div selecionados
+        const dadosSelecionados = this.selecionarDados();
         dadosSelecionados.forEach(button => {
             if (button.getAttribute('listener') !== 'existe') { // verifica se já existe um eventlistener
                 button.addEventListener('click', () => {
@@ -49,6 +62,10 @@ class Dados { // classe geral da rolagem de dados
                 button.setAttribute('listener', 'existe'); // atributo para confirmar a existencia do eventlistener
             }
         })
+    }
+
+    selecionarDados() {
+        return document.querySelectorAll('.selecionados .dado'); // dados dentro da div selecionados
     }
 }
 
@@ -75,5 +92,5 @@ btoRolagem.addEventListener('click', () => {
 })
 
 btoLimpar.addEventListener('click', () => {
-    dados.limpar();
+    dados.limpar(true);
 })

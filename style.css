@@ -111,21 +111,21 @@ body {
 }
 
 .res-rolagem {
-  margin-bottom: 20px;
   width: 100%;
   display: flex;
+  flex-flow: row wrap;
   align-items: center;
   justify-content: center;
 }
 
 .res-rolagem > img {
-  width: 6%;
-  margin-right: 30px;
-  border: solid 1px;
-  border-radius: 60px;
+  width: 8%;
+  margin-right: 10px;
+  margin-bottom: 5px;
 }
 
 .total-rolagem {
+  margin-top: 10px;
   margin-bottom: 40px;
   font-size: 1rem;
 }
