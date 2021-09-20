@@ -4,56 +4,126 @@ class Dados { // classe geral da rolagem de dados
         this._resRolagem = resRolagem; // div (array) do resultado de cada dado
         this._resRolagemTotal = resRolagemTotal; // resultado dos dados + valor extra
         this._idAtual = 0;
+        this._dadoAtual = "none";
     }
 
 
-    rolar() {
-        this.limpar()
-        const dadosSelecionados = this.selecionarDados();
-        dadosSelecionados.forEach(dado => {
-            const rolagem = document.createElement('img');
-            rolagem.src = '../dados/' + dado.getAttribute('name') + '.png';
-            rolagem.alt = dado.getAttribute('name') + '.png';
-            this._resRolagem.appendChild(rolagem);
+    addRolagem() { // adiciona a rolagem em forma de imagme
+        this.limpar() // limpa a rolagem anterior
+        const dadosSelecionados = document.querySelectorAll('.selecionados .dado');
+
+        dadosSelecionados.forEach(dado => { // Fara a adição do novo elemento para cada dado rolado
+            const rolagem = this.rolar(dado); // armazena o valor do dado
+            // criação do html para o dado rolado
+            const container = document.createElement('div');
+            container.classList.add('dado-container');
+            const texto = document.createElement('h2');
+            texto.textContent = rolagem
+            texto.classList.add('texto-dado');
+            texto.setAttribute('value', rolagem);
+            const img = document.createElement('img');
+            img.src = '../dados/' + dado.getAttribute('name') + '.png'; // imagem a ser utilizada
+            img.alt = dado.getAttribute('name') + '.png';
+
+            container.appendChild(texto);
+            container.appendChild(img);
+            this._resRolagem.appendChild(container); // adiciona na pagina
         })
+    }
+    
+    rolar(dado) { // rolagem do dado com Math.random
+        const name = dado.getAttribute('name').replace("D", "");
+        if (name !== "extra") {
+            const min = 1;
+            const max = parseInt(name) + 1;
+            const rolagem = Math.floor(Math.random() * (max - min) + min);
+            return rolagem
+        }
+        else {
+            return dado.getAttribute('value')
+        }
+    }
+    
+    somar() { // soma os valores rolados
+        const valores = document.querySelectorAll('.res-rolagem .dado-container');
+        let soma = 0;
+        valores.forEach(resultado => {
+            const valor = resultado.querySelector('h2');
+            soma += parseInt(valor.getAttribute('value'))
+        })
+        // adiciona a soma total na tela
+        this._resRolagemTotal.setAttribute('value', soma);
+        this._resRolagemTotal.textContent = "TOTAL: " + soma
     }
 
     limpar(total = false) {
         if (total) { // irá remover os dados apenas se for verdadeiro
-        while (this._selecionados.firstChild) {
-            this._selecionados.removeChild(this._selecionados.lastChild);
-        }}
+            while (this._selecionados.firstChild) {
+                this._selecionados.removeChild(this._selecionados.lastChild);
+            }
+            document.querySelector("#valor-extra").value = 0; // limpa o campo de valor extra
+        }
         while (this._resRolagem.firstChild) { // remove a rolagem
             this._resRolagem.removeChild(this._resRolagem.lastChild);
         }
+        // limpa o resultado final da rolagem
+        this._resRolagemTotal.setAttribute('value', 0)
+        this._resRolagemTotal.textContent = "TOTAL: 0";
     }
 
     adicionarDado() { // adiona um novo dado
-        const dadoId = 'dado' + this._idAtual;
-        const dado = document.createElement('button'); // cria o botão para se referir ao dado
-        const name = 'D6'
+        const dadoTipo = this._dadoAtual;
+        if (dadoTipo !== "none") {
+            const dadoId = 'dado' + this._idAtual;
+            const dado = document.createElement('button'); // cria o botão para se referir ao dado
+            const name = dadoTipo;
 
-        dado.classList.add('dado');
-        dado.id = dadoId;
-        this._idAtual += 1;
-        dado.textContent = name;
-        dado.setAttribute('name', name)
+            dado.classList.add('dado');
+            dado.id = dadoId;
+            this._idAtual += 1;
+            dado.textContent = name;
+            dado.setAttribute('name', name)
 
-        this._selecionados.appendChild(dado); // insere na div
-}
-
-    removerDado(id) { // remover um dado
-        const dado = document.getElementById(id); // encontra o node/dado/botão
-
-        this._selecionados.removeChild(dado) // remove
+            this._selecionados.appendChild(dado); // insere na div
+        }
     }
 
-    somar() {
+    adicionaValorExtra(value) { // adiciona o valor extra toda vez que ele for atualizado
+        this.removerDado("extra");
+        if (parseInt(value) !== 0) {
+            const extra = document.createElement('button');
+    
+            extra.setAttribute('name', 'extra');
+            extra.id = "extra";
+            extra.classList.add('dado');
+            if (value > 0) {
+                extra.textContent = "+" + value;
+            }
+            else {
+                extra.textContent = value;
+            }
+            extra.setAttribute('value', value);
+    
+            this._selecionados.appendChild(extra);
+            this.atualizaDadosBto();
+        }
+    }
 
+    removerDado(id) { // remover um dado
+        if (document.getElementById(id)) {
+            const dado = document.getElementById(id); // encontra o node/dado/botão
+
+            this._selecionados.removeChild(dado) // remove
+        }
+    }
+
+    pegarDado(value) {
+        this._dadoAtual = value;
+        console.log(this._dadoAtual)
     }
 
     atualizaDadosBto() { // adiciona um eventlistener para os dados selecionados, chamado quando adicio um dado novo
-        const dadosSelecionados = this.selecionarDados();
+        const dadosSelecionados = document.querySelectorAll('.selecionados .dado');
         dadosSelecionados.forEach(button => {
             if (button.getAttribute('listener') !== 'existe') { // verifica se já existe um eventlistener
                 button.addEventListener('click', () => {
@@ -63,19 +133,14 @@ class Dados { // classe geral da rolagem de dados
             }
         })
     }
-
-    selecionarDados() {
-        return document.querySelectorAll('.selecionados .dado'); // dados dentro da div selecionados
-    }
 }
 
 // variáveis referentes ao html
 const dadoSelecionador = document.querySelectorAll('.seletor .dado'); // combobox
 const btoAdicionarDado = document.querySelector('.adicionar-dado'); 
-const valorExtra = document.querySelector('#valor-extra'); 
 const selecionados = document.querySelector('.selecionados'); // div dos dados selecionados, usado para inserção e remoção
 const resRolagem = document.querySelector('.res-rolagem'); 
-const resRolagemTotal = document.querySelector('.total-rolagem') 
+const resRolagemTotal = document.querySelector('.total-rolagem #total') 
 const btoRolagem = document.querySelector('.rolar'); 
 const btoLimpar = document.querySelector('.limpar'); 
 
@@ -88,7 +153,8 @@ btoAdicionarDado.addEventListener('click', () => { // acionador para adicionar u
 })
 
 btoRolagem.addEventListener('click', () => {
-    dados.rolar();
+    dados.addRolagem();
+    dados.somar();
 })
 
 btoLimpar.addEventListener('click', () => {

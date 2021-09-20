@@ -85,12 +85,12 @@ body {
 }
 
 .selecionados {
-  margin-bottom: 40px;
+  margin-bottom: 15px;
   display: flex;
   flex-flow: row wrap;
   align-content: cenetr;
   justify-content: center;
-  width: 100%;
+  width: 50%;
 }
 
 .selecionados > button {
@@ -111,17 +111,30 @@ body {
 }
 
 .res-rolagem {
-  width: 100%;
+  width: 50%;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
   justify-content: center;
 }
 
-.res-rolagem > img {
-  width: 8%;
-  margin-right: 10px;
-  margin-bottom: 5px;
+.dado-container {
+  width: 10%;
+  position: relative;
+  text-align: center;
+  margin: 0 3px;
+}
+
+.dado-container img {
+  width: 100%;
+}
+
+.texto-dado {
+  font-size: 140%;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .total-rolagem {

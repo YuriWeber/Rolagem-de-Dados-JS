@@ -23,40 +23,39 @@
 
     <div class="area-rolagem">
       <div class="seletor">
-        <select name="dados" id="dados">
+        <select
+          class="lista-dado"
+          id="dados"
+          onchange="dados.pegarDado(this.value)"
+        >
           <option value="none" selected disabled hidden>SELECIONE</option>
-          <option value="dado-4" class="dado">D4</option>
-          <option value="dado-6" class="dado">D6</option>
-          <option value="dado-8" class="dado">D8</option>
-          <option value="dado-10" class="dado">D10</option>
-          <option value="dado-12" class="dado">D12</option>
-          <option value="dado-20" class="dado">D20</option>
-          <option value="dado-100" class="dado">D100</option>
+          <option value="D4" class="dado">D4</option>
+          <option value="D6" class="dado">D6</option>
+          <option value="D8" class="dado">D8</option>
+          <option value="D10" class="dado">D10</option>
+          <option value="D12" class="dado">D12</option>
+          <option value="D20" class="dado">D20</option>
+          <!-- <option value="dado-100" class="dado">D100</option> -->
         </select>
         <button class="adicionar-dado">+</button>
         <label for="valor-extra">Valor extra:</label>
-        <input type="number" id="valor-extra" value="0" />
+        <input
+          type="number"
+          id="valor-extra"
+          value="0"
+          onchange="dados.adicionaValorExtra(this.value)"
+        />
       </div>
-      <div class="selecionados">
-        <button class="dado" id="extra" name="extra">+2</button>
-      </div>
-      <div class="res-rolagem">
-        <img src="../dados/d4.png" alt="d4" />
-        <img src="../dados/d6.png" alt="d6" />
-        <img src="../dados/d8.png" alt="d8" />
-        <img src="../dados/d10.png" alt="d10" />
-        <img src="../dados/d12.png" alt="d12" />
-        <img src="../dados/d20.png" alt="d20" />
-      </div>
+      <div class="selecionados"></div>
+      <div class="res-rolagem"></div>
       <div class="total-rolagem">
-        <h2>TOTAL: 22</h2>
+        <h2 id="total">TOTAL: 0</h2>
       </div>
       <div class="botoes-rolar">
         <button class="rolar">Rodar Dados</button>
         <button class="limpar">Limpar Dados</button>
       </div>
     </div>
-
     <footer class="footer">
       <p>Desenvolvido por Yuri</p>
     </footer>
