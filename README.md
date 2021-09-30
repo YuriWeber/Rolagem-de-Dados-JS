@@ -1,9 +1,9 @@
-## Rolagem de Dados
+# Rolagem de Dados
 
 Sistema de rolagem de dados, usando html, css e javascript puro.
 
 
-# Estado atual
+## Estado atual
 
 Botões com estilização básica.
 Select sem estilização.
