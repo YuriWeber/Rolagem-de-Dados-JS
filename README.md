@@ -5,9 +5,9 @@ Sistema de rolagem de dados, usando html, css e javascript puro.
 
 ## Estado atual
 
-Botões com estilização básica.__
+Botões com estilização básica.\
 Select sem estilização.\
 Falta de responsividade.\
 Seleção dos dados funcional.\
 Adição de valor extra funcional.\
-Rolagem dos dados funcional.\
+Rolagem dos dados funcional.
